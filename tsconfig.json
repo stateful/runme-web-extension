@@ -9,6 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "Node",
     "resolveJsonModule": true,

@@ -1,34 +1,24 @@
 {
-  "name": "Cat Facts",
-  "description": "Learn random facts about cats",
-  "version": "1.0.0",
+  "name": "Runme Web Extension",
+  "description": "A Runme browser extension to bring Runme capabilities into the browser.",
+  "version": "0.0.0",
   "manifest_version": 2,
-  "browser_action": {
-    "default_popup": "index.html",
-    "default_title": "Open the popup"
-  },
   "optional_permissions": [
     "<all_urls>"
   ],
   "content_scripts": [
     {
-      "matches": [
-        "https://blank.org/*"
-      ],
-      "run_at": "document_end",
-      "js": [
-        "./index.global.js"
-      ],
-      "css": [
-        "./style.css"
-      ]
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle",
+      "js": ["./index.global.js"],
+      "css": ["./style.css"]
     }
   ],
-  "background": {
-    "page": "background.html",
-    "persistent": false
-  },
   "icons": {
-    "128": "logo128.png"
+    "72": "icon-72x72.png",
+    "96": "icon-96x96.png",
+    "128": "icon-128x128.png",
+    "144": "icon-144x144.png",
+    "152": "icon-152x152.png"
   }
 }

@@ -1,26 +1,38 @@
-import browser from "webextension-polyfill";
+/**
+ * This boilerplate code is currently not used in extension.
+ * You can enable background scripts by adding:
+ * 
+ *   "background": {
+ *     "page": "background.html",
+ *     "persistent": false
+ *   },
+ * 
+ * to the manifest.json file
+ */
 
-type Message = {
-  action: 'fetch',
-  value: null
-}
+// import browser from "webextension-polyfill";
 
-type ResponseCallback = (data: any) => void
+// type Message = {
+//   action: 'fetch',
+//   value: null
+// }
 
-async function handleMessage({action, value}: Message, response: ResponseCallback) {
-  if (action === 'fetch') {
-    const result = await fetch('https://meowfacts.herokuapp.com/');
+// type ResponseCallback = (data: any) => void
 
-    const { data } = await result.json();
+// async function handleMessage({action, value}: Message, response: ResponseCallback) {
+//   if (action === 'fetch') {
+//     const result = await fetch('https://meowfacts.herokuapp.com/');
 
-    response({ message: 'success', data });
-  } else {
-    response({data: null, error: 'Unknown action'});
-  }
-}
+//     const { data } = await result.json();
 
-// @ts-ignore
-browser.runtime.onMessage.addListener((msg, sender, response) => {
-  handleMessage(msg, response);
-  return true;
-});
+//     response({ message: 'success', data });
+//   } else {
+//     response({data: null, error: 'Unknown action'});
+//   }
+// }
+
+// // @ts-ignore
+// browser.runtime.onMessage.addListener((msg, sender, response) => {
+//   handleMessage(msg, response);
+//   return true;
+// });

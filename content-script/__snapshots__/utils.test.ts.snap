@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getLinkDetails 1`] = `
+{
+  "fileToOpen": "README.md",
+  "repository": "https://github.com/webdriverio/webdriverio.git",
+}
+`;
+
+exports[`getLinkDetails 2`] = `
+{
+  "fileToOpen": "packages/wdio-jasmine-framework/README.md",
+  "repository": "https://github.com/webdriverio/webdriverio.git",
+}
+`;
+
+exports[`getLinkDetails 3`] = `
+{
+  "fileToOpen": "packages/wdio-jasmine-framework/README.md",
+  "repository": "https://github.com/webdriverio/webdriverio.git",
+}
+`;
+
+exports[`getLinkDetails 4`] = `
+{
+  "fileToOpen": "CODE_OF_CONDUCT.md",
+  "repository": "https://github.com/webdriverio/webdriverio.git",
+}
+`;

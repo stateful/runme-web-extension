@@ -1,6 +1,6 @@
+import path from 'node:path'
+
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import {resolve} from "path";
 
 const fetchVersion = () => {
   return {
@@ -16,13 +16,13 @@ const fetchVersion = () => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), fetchVersion()],
+  plugins: [fetchVersion()],
   build: {
     emptyOutDir: false,
-    outDir: resolve(__dirname, 'dist'),
+    outDir: path.resolve(__dirname, 'dist'),
     lib: {
       formats: ['iife'],
-      entry: resolve(__dirname, './background.ts'),
+      entry: path.resolve(__dirname, './background.ts'),
       name: 'Cat Facts'
     },
     rollupOptions: {

@@ -1,37 +1,37 @@
 {
-  "name": "vite-react-tailwindcss-browser-extension",
-  "version": "1.0.0",
-  "description": "A Cross Browser Extension template",
-  "main": "index.js",
+  "name": "runme-web-extension",
+  "version": "0.0.0",
+  "description": "A Runme browser extension to bring Runme capabilities into the browser.",
+  "author": "Christian Bromann <christian@stateful.com>",
+  "license": "Apache-2.0",
+  "main": "/dist/index.global.js",
   "scripts": {
+    "clean": "rimraf dist",
     "dev": "vite",
     "build:manifest:chrome": "mv dist/manifestv3.json dist/manifest.json",
     "build:background:chrome": "vite build --config vite.chrome.config.ts",
     "build:js": "vite build --config vite.content.config.ts",
     "build:web": "tsc && vite build",
-    "build": "NODE_ENV=production run-s build:js build:web",
+    "build": "NODE_ENV=production run-s clean build:js build:web",
     "build:chrome": "NODE_ENV=production run-s build:js build:background:chrome build:web build:manifest:chrome",
     "package": "zip -r extension.zip dist/*",
     "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.10",
-    "@types/react": "^18.0.30",
-    "@types/react-dom": "^18.0.11",
     "@types/webextension-polyfill": "^0.10.0",
-    "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
+    "rimraf": "^4.4.1",
     "tailwindcss": "^3.2.7",
     "typescript": "^5.0.2",
     "vite": "^4.2.1",
+    "vitest": "^0.29.7",
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@webcomponents/custom-elements": "^1.5.1",
+    "lit": "^2.7.0"
   }
 }
