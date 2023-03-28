@@ -1,5 +1,11 @@
 export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string) => Element[]> = {
-    '#readme > div': (root: Element, selector: string) => [...root.querySelectorAll('#readme > div')],
+    '#readme > div': (root: Element, selector: string) => {
+        const editBtn = document.querySelector('a[aria-label="Edit this file"]')
+        if (editBtn) {
+            return [editBtn.parentElement!]
+        }
+        return [...root.querySelectorAll('#readme > div')]
+    },
     'readme-toc > div > div': (root: Element, selector: string) => {
         const containers: Element[] = []
         for (const el of [...root.querySelectorAll(selector)]) {

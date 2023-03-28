@@ -1,10 +1,14 @@
-import './RunmeButton.js'
+import { RunmeButton } from './RunmeButton.js'
 import './index.css'
 
 import { getLinkDetails } from './utils.js'
 import { BUTTON_VARIANTS, ATTACH_POINTS } from './constants.js'
 
 console.debug('Runme Web Extension initiated, more information at https://github.com/stateful/runme-web-extension')
+
+function hasNoRunmeButton (el: Element) {
+  return !el.querySelector('runme-button') && !el.querySelector('.runme-button')
+}
 
 function init(root: HTMLElement = document.body) {
   const { repository, fileToOpen } = getLinkDetails()
@@ -18,16 +22,10 @@ function init(root: HTMLElement = document.body) {
       continue
     }
 
-    const targetElems = factory(root, selector)
+    const targetElems = factory(root, selector).filter(hasNoRunmeButton)
     const variant = BUTTON_VARIANTS[selector] || 'badge'
-    console.log('ATTACH to', selector, targetElems.length);
-    
     for (const el of targetElems) {
-      const runmeButton = document.createElement('runme-button')
-      runmeButton.setAttribute('repository', repository)
-      runmeButton.setAttribute('file', fileToOpen)
-      runmeButton.setAttribute('variant', variant || 'badge')
-      el.appendChild(runmeButton)
+      el.appendChild(RunmeButton.render(repository, fileToOpen, variant))
     }
   }
 }
@@ -46,7 +44,7 @@ const callback = (mutationList: MutationRecord[]) => {
     if (
       !mutation.target ||
       mutation.addedNodes.length === 0 ||
-      (mutation.target as any).querySelector('runme-button')
+      !hasNoRunmeButton(mutation.target as Element)
     ) {
       continue
     }

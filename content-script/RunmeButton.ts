@@ -1,9 +1,23 @@
 import '@webcomponents/custom-elements'
 import 'lit/polyfill-support.js'
 
-import { LitElement, css, html } from 'lit'
+import { LitElement, css, html, TemplateResult } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { ifDefined } from 'lit/directives/if-defined.js'
+
+type Variant = 'badge' | 'minified'
+
+const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+class LitBaseClass extends LitElement {
+  @property({ type: String })
+  repository = ''
+
+  @property({ type: String })
+  file = ''
+
+  @property({ type: String })
+  variant: Variant = 'badge'
+}
+const BaseClass = isFirefox ? class {} as typeof LitElement : LitBaseClass
 
 /**
  * button image captured from
@@ -38,8 +52,15 @@ function runmeBadgeImage (filename: string) {
 }
 
 function runmeLogoImage () {
+  const width = 20
+  const height = 20
+
+  if (isFirefox) {
+    return html`<img style="margin: 4px 0 1px" width=${width} height=${height} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAABp1BMVEUAAABJSdtgQN9VOeNgQN9aPOFVOeNYO+JeOeNbN9tePN1cOd5bO99aOt9cOt9bOeBaO+BbOt9bOd9cO+BbOuBcOd5bOd9bO99aOt9bOt9bOt9bOt9aOuBbOt9cOt9bOt9bOt9bOt9aOt9bOuBbOt9bOuBbOt9bOt9bOt9bOt9bOuBbOd9bOt9cO99cPN9ePeBePuBfP+BgP+BgQOBiQuBjQ+FnSeFoSeJpSuJpS+JtUONuUeNvUuNyVuRzV+R1WuR2WuR3W+R8YuZ9Y+Z+ZOZ/ZeaAZuaGbueHb+iJceiJcuiKcuiLc+iSfOqUfuqUf+qWgOqWgeuXg+uYg+uZhOuZheueiuyfi+ygjeygje2pl+6pmO6qme6rmu+sm++tnO+3qPG4qfG5q/G6rPG6rPK7rvK8r/LCtvPDt/PEuPPEufTMwvXNw/XNxPXPxfbPxvbQx/bWzvfa0vja0/jb1Pji3Pnj3vrk3/rm4frn4vro5Pvp5fvq5vvt6fvu6vzv7Pzw7Pzw7fz18/329P339f339v36+f76+v78+/79/f/+/f/+/v////+TJw6gAAAALHRSTlMABwgJEBESGhscHl5fYGFiY3Z4ent9ra6vsMnKy83Oz9fY2dvi4+Tv8PHz9CS5tugAAAABYktHRIxsC9JDAAAB+0lEQVRo3u3aZVNCQRQG4BXFTixUVLAIF1Ts7hYVu7vFxsDGRs+PdkUZ/eaM+vLB2fcH8MzsPXfv2cMy5k1wTIoun/9p8nXqaCX7TGCCkUNiiA/0GSFpHJbM8HcjLI8DkxvqXat0Do1GIZBEDo5K1JURjRiULJbDE8VS8Egyy8YjOmbCIybG/RCJSEQiEpHIDxGzGY/YXWdTVWYsYnYRefaGLViEvHH2leARullrxiNi0VbaLHCEns8nK+GIyPVoDR6hh4OeIjgiFs3ZUQpHiNwbdXhE1PNSQwEcITqcLsYjRK7xCjxCj9vdeETE0VWIR8g9X4tHiO5nG/EIPR0PlsKRt0KzleMRut1tscARUc+OZiscITpfLMcjRJcDfkDo9L8gF3b8g18og5fwZhO6hG934C/jy4mtDL1BHg2UoDfIuxn4Vn89B/9ovTg60Z/fx60ueCNxMgZviQ6nrPA2dbEe3aa61+ENt8fZjj46POx3F3KORa5GquEH04kKzrGIZ7kVfcS+WW2CDwsOeqFjD+8AZ+i3Y6JvRlH9rtNJ9ChKziAlIhGJSOQ/IH74q9zIsvCIlqnxSBKLxiMRLNiANvRBjMWjkThxA0ehwRqpb9d8WGgu0sgJ+bh6lYozMsJ9F7wUKtDT18cFfLmrpoxSa//43TdpkyOD3n/9FQ2gWMh05jU2AAAAAElFTkSuQmCC" />`
+  }
+
   return html`
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 100 100" fill="none">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width=${width} height=${height} viewBox="0 0 100 100" fill="none">
     <rect width="100" height="100" rx="11" fill="#5B3ADF" />
     <rect x="20" y="20" width="60" height="60" fill="url(#pattern0)" />
     <defs>
@@ -52,22 +73,16 @@ function runmeLogoImage () {
 }
 
 @customElement('runme-button')
-export class RunmeButton extends LitElement {
-  @property({ type: String })
+export class RunmeButton extends BaseClass {
   repository = ''
-
-  @property({ type: String })
   file = ''
-
-  @property({ type: String })
-  variant: 'badge' | 'minified' = 'badge'
+  variant: Variant = 'badge'
 
   render() {
     const filename = this.file.split('/').pop() || 'markdown'
     const fileToOpen = encodeURIComponent(this.file || 'README.md')
     const href = `https://runme.dev/api/runme?repository=${encodeURIComponent(this.repository)}&fileToOpen=${fileToOpen}`
     const img = this.variant === 'minified' ? runmeLogoImage() : runmeBadgeImage(filename)
-    
     return html`<a href="${href}" class=${this.variant} target="_blank">${img}</a>`
   }
 
@@ -94,4 +109,51 @@ export class RunmeButton extends LitElement {
       margin: 4px 0 0;
     }
   `
+
+  static getRenderString (data: TemplateResult) {
+    const {strings, values} = data;
+    const v = [...values, ''].map((e) => typeof e === 'object' ? RunmeButton.getRenderString(e as TemplateResult) : e )
+    return strings.reduce((acc,s, i) => acc + s + v[i], '')
+  }
+
+  /**
+   * render without using Web Components (needed for Firefox where this Web API is disabled)
+   */
+  static render (repository: string, file: string, variant: Variant) {
+    /**
+     * Firefox doesn't support web components in content scripts
+     * see https://github.com/w3c/webextensions/issues/210/
+     */
+    if (isFirefox) {
+      const elem = new RunmeButton()
+      elem.repository = repository
+      elem.file = file
+      elem.variant = variant
+      const wrapper = document.createElement('div')
+      wrapper.className = 'runme-button'
+      wrapper.innerHTML = RunmeButton.getRenderString(elem.render())
+
+      /**
+       * attach CSS if needed
+       */
+      if (document.styleSheets.length) {
+        RunmeButton.styles.cssText
+          .split('}')
+          .map((rule) => rule.trim())
+          .filter(Boolean)
+          .map((rule) => '.runme-button ' + rule + ' }')
+          .forEach(
+            (rule) => document.styleSheets.item(0)!.insertRule(rule, 1)
+          )
+      }
+
+      return wrapper
+    }
+
+    const runmeButton = document.createElement('runme-button')
+    runmeButton.setAttribute('repository', repository)
+    runmeButton.setAttribute('file', file)
+    runmeButton.setAttribute('variant', variant || 'badge')
+    return runmeButton
+  }
 }
