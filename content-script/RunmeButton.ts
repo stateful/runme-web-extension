@@ -122,9 +122,18 @@ export class RunmeButton extends BaseClass {
       transition-duration: .1s;
     }
     div.listItem {
-      color: #000;
       text-decoration: none;
       transform: translateY(-2px);
+    }
+    @media (prefers-color-scheme: light) {
+      div.listItem {
+        color: #000000;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      div.listItem {
+        color: #c9d1d9;
+      }
     }
     div.listItem svg {
       transform: translateY(3px);
