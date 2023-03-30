@@ -4,7 +4,8 @@
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
   "author": "Christian Bromann <christian@stateful.com>",
   "license": "Apache-2.0",
-  "main": "/dist/index.global.js",
+  "export": "/dist/index.global.js",
+  "type": "module",
   "private": true,
   "scripts": {
     "clean": "rimraf dist",
@@ -16,19 +17,21 @@
     "build": "NODE_ENV=production run-s clean build:js build:web",
     "build:chrome": "NODE_ENV=production run-s build:js build:background:chrome build:web build:manifest:chrome",
     "bundle": "run-s bundle:*",
-    "bundle:firefox": "run-s build && crx pack ./dist -o ./runme-firefox.crx",
+    "bundle:firefox": "run-s build && zip -r ./runme-firefox.zip ./dist",
     "bundle:chrome": "run-s build:chrome && crx pack ./dist -o ./runme-chrome.crx",
     "bundle:zip": "run-s build:chrome && crx pack ./dist --zip-output ./runme-web-extension.zip",
     "package": "zip -r extension.zip dist/*",
     "preview": "vite preview",
     "test": "run-s test:*",
-    "test:wdio": "wdio run ./wdio.conf.ts"
+    "test:component": "wdio run ./wdio.ui.conf.ts",
+    "test:e2e": "wdio run ./wdio.e2e.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
     "@types/webextension-polyfill": "^0.10.0",
     "@wdio/browser-runner": "^8.6.9",
     "@wdio/cli": "^8.6.9",
+    "@wdio/firefox-profile-service": "^8.6.8",
     "@wdio/mocha-framework": "^8.6.8",
     "@wdio/spec-reporter": "^8.6.8",
     "autoprefixer": "^10.4.14",

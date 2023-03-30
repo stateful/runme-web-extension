@@ -1,15 +1,44 @@
-# Cross Platform Browser Extension template repository
+# Runme Web Extension
 
-React + TailwindCSS bundled with Vite.
+A browser web extension to add Runme buttons to markdown files on the internet. Download the extension on the marketplaces:
 
-# Installation
+- Chrome:
+- Firefox:
+
+## Development
+### Setup
+
+Install dependencies via:
+
 ```
 npm i
 ```
 
-# Building the Extension:
+then build files via:
 
-## Firefox
+```
+npm run build
+```
+
+### Test
+
+This project tests the extension files using component tests and the extension integration via e2e test with WebdriverIO.
+
+Run unit/component tests:
+
+```sh
+npm run test:component
+```
+
+Run e2e tests:
+
+```sh
+npm run test:e2e
+```
+
+### Building the Extension:
+
+#### Firefox
 `npm run build` builds the extension by default for Firefox.
 
 The generated files are in `dist/`.
@@ -20,13 +49,13 @@ Firefox > Preferences > Extensions & Themes > Debug Add-ons > Load Temporary Add
 
 Here locate the `dist/` directory and open `manifest.json`
 
-## Chrome
+#### Chrome
 `npm run build:chrome` builds the extensions for Google Chrome.
 
 The generated files are in `dist/`.
 To load the extensions in Google Chrome go to `chrome://extensions/` and click `Load unpacked`. Locate the dist directory and select `manifest.json`.
 
-# Files:
+## Files:
 
  - content-script - UI files
  - background.ts - Background script/Service worker

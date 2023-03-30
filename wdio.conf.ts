@@ -2,19 +2,10 @@ import type { Options } from '@wdio/types'
 
 export const config: Options.Testrunner = {
   //
-  // ====================
-  // Runner Configuration
-  // ====================
-  // WebdriverIO supports running e2e tests as well as unit and component tests.
-  runner: ['browser', {
-    preset: 'lit',
-    headless: !process.env.DEBUG
-  }],
-  //
   autoCompileOpts: {
     autoCompile: true,
     tsNodeOpts: {
-      project: './tsconfig.json',
+      project: './tsconfig.node.json',
       transpileOnly: true
     }
   },
@@ -34,14 +25,9 @@ export const config: Options.Testrunner = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: [
-    './src/**/*.test.ts',
-    './content-script/**/*.test.ts',
-  ],
+  specs: [],
   // Patterns to exclude.
-  exclude: [
-    // 'path/to/excluded/files'
-  ],
+  exclude: [],
   //
   // ============
   // Capabilities
@@ -64,11 +50,7 @@ export const config: Options.Testrunner = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://saucelabs.com/platform/platform-configurator
   //
-  capabilities: [{
-    browserName: 'chrome',
-  }, {
-    browserName: 'firefox',
-  }],
+  capabilities: [],
   //
   // ===================
   // Test Configurations

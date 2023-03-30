@@ -2,7 +2,8 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "target": "ESNext",
+    "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true
   },
