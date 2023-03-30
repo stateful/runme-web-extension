@@ -10,13 +10,13 @@ A browser web extension to add Runme buttons to markdown files on the internet. 
 
 Install dependencies via:
 
-```
+```sh
 npm i
 ```
 
 then build files via:
 
-```
+```sh
 npm run build
 # building for Chrome
 npm run build:chrome
