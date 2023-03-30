@@ -23,7 +23,7 @@
     "package": "zip -r extension.zip dist/*",
     "preview": "vite preview",
     "test": "run-s test:*",
-    "test:component": "wdio run ./wdio.ui.conf.ts",
+    "test:component": "wdio run ./wdio.ui.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
     "test:e2e": "wdio run ./wdio.e2e.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json"
   },
   "devDependencies": {
