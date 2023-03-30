@@ -1,0 +1,52 @@
+name: 'Release'
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: "Release Type"
+        required: true
+        type: choice
+        default: "patch"
+        options:
+          - patch
+          - minor
+          - major
+      preRelease:
+        description: If latest release was a pre-release (e.g. X.X.X-alpha.0) and you want to push another one, pick "yes"
+        required: true
+        type: choice
+        default: "no"
+        options:
+          - "yes"
+          - "no"
+
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm run bundle
+        env:
+          NODE_ENV: production
+      - name: Release
+        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event.inputs.preRelease == 'no' }}
+      - name: Pre-Release
+        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --preRelease=alpha --github.preRelease
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event.inputs.preRelease == 'yes' }}
