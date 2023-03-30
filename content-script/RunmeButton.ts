@@ -5,6 +5,7 @@ import { LitElement, css, html, TemplateResult } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 
 type Variant = 'badge' | 'minified'
+const DEFAULT_FILE_TO_OPEN = 'README.md'
 
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
 class LitBaseClass extends LitElement {
@@ -12,7 +13,7 @@ class LitBaseClass extends LitElement {
   repository = ''
 
   @property({ type: String })
-  file = ''
+  file = DEFAULT_FILE_TO_OPEN
 
   @property({ type: String })
   variant: Variant = 'badge'
@@ -43,8 +44,8 @@ function runmeBadgeImage (filename: string) {
     <g aria-hidden="true" fill="#fff" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
       <text x="220" y="148" textLength="494" fill="#000" opacity="0.25">Run this </text>
       <text x="210" y="138" textLength="494">Run this </text>
-      <text x="809" y="148" textLength="469" fill="#000" opacity="0.25">README</text>
-      <text x="799" y="138" textLength="469">README</text>
+      <text x="809" y="148" textLength="469" fill="#000" opacity="0.25">${filename.toUpperCase()}</text>
+      <text x="799" y="138" textLength="469">${filename.toUpperCase()}</text>
     </g>
     <image x="40" y="35" width="130" height="130"
       xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjExIiBmaWxsPSIjNUIzQURGIi8+CjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSJ1cmwoI3BhdHRlcm4wKSIvPgo8ZGVmcz4KPHBhdHRlcm4gaWQ9InBhdHRlcm4wIiBwYXR0ZXJuQ29udGVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgd2lkdGg9IjEiIGhlaWdodD0iMSI+Cjx1c2UgeGxpbms6aHJlZj0iI2ltYWdlMF8zMDhfMTQyIiB0cmFuc2Zvcm09InNjYWxlKDAuMDExMTExMSkiLz4KPC9wYXR0ZXJuPgo8aW1hZ2UgaWQ9ImltYWdlMF8zMDhfMTQyIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBRm9BQUFCYUNBWUFBQUE0cUVFQ0FBQUFCbUpMUjBRQS93RC9BUCtndmFlVEFBQURPMGxFUVZSNG5PM2R5MjhPVVJnRzhPZDFqWVRFUmxpeVptUEZDb242RTJySnpsWWtwU0ZCSWhGbGcwU0VCWkhZNFQrb0x0alIwSTNiampZcTRoYUNSVzhlaStsSjIvaDhuY3M1MzVrejgvelcwNW4zUEpuT04rOWN6Z0FpSWlJaUlpSk5SSElOeVlza1A1RDhUUEl5eVUyeDYyb2Nra1A4MXcrU0owbXVpMTFmWTh6dnlmL3pudVFSa2l0ajE1bThMaUV2OW9wa2YreGFrNVl6YUdlWTVNN1lOU2VwWU5BaytZZmtQWkxiWXRlZWxCSkJPMU1rcjVMY0dIc01TYWdRdFBPVjVDREp0YkhIVW1zZWduYmVrVHhFMG1LUHFaWThCdTA4SWJrbjlyaHFKMERRempESkhiSEhWeHNCZ3liSmFaSTNTVzZPUGM3b0FnZnQvR0xXNm0rSVBkNW9laFMwMDk2V3ZzZEJPMG0yOUpWT3AwalNWeUVsakFBNGJtWmpFV3ZJYlVYc0FpcllEK0FaRTJucFV3NGF5UDRqK3dHOFljMWIrcFFQSFoxOEEzQUp3QlV6bTRwZHpHSk5DOW9aQjNBR3dGMHpxMFdOVFEzYUdRVXdZR2FQWXhmUzlLQ2Rod0NPbWRtTFdBV2svbU9ZVngrQU1XWXQvWllZQmJSbGoxN3NONEJyQU02YjJjOWViYlNOUVR1VEFNNEJ1R1ZtYzZFMzF1YWduZGNBenByWi9aQWJVZEFMUmdDY01MUG5JVmF1b0pjaWdBY0FCczNzcmM4VnQrV3NJNjlnTGIzMjZPNjh0ZlFLT3A4SkFLZFJvYVZYME1XTUlyc0cvcWpvSHlyb2NncTM5QXE2dkJrQTE1R2RFazR2dC9DcThQVTAxbW9BUndITUFoaFlibUh0MGRWOU1iTmxYeWZSZVhTUEtPanE3dVJaU01mbzhtYVFYVzQ5bFdkaEJWMU80ZE03SFRxS0dRV3d6OHdPRkwwdHBxRHptUUJ3R01DdU1sMGhvRVBIY3J4ZFZGTFFuVTBEdUlIc3pzdDNIeXRVMEVzRnUvQ3ZvQmNFZlRwVlA0Ylp6ZG1EWnRZWDhoSGdOdS9SUFgzY29JMUJSM21BcGsxQnp3SzRqZXhNNG1Pdk45NldvUFdRWTJCUEFld3Qwekw3MXRTZ3g1RzF6THZyOEd3MDBMeERSMjFmcldoSzBONWJadDlTRHpwWXkreGJ5a0VuOVVKbkpjRmVRdTR1eVZlVUsrbHh3SHJwUGpBM2pjVDYyT09OSm5EQW1oakZDUmp5TU1udHNjZFhHd0VDMXVSVm5YZ01XTk94ZGVNaFlFMHdtRWVGZ0RWbFpoRWxBcDVqTm1QTTF0aTFKNlZneUpyV3VLeWNBYjlrMjFwbTMwaE9kZ200dlMyemJ5UXZkQWhZSDFQd2pkbm5RWWJtOSt4UDFPZEJSRVJFUkVSRTB2TVhKcEZOUnczSThCd0FBQUFBU1VWT1JLNUNZSUk9Ii8+CjwvZGVmcz4KPC9zdmc+" />
@@ -75,12 +76,16 @@ function runmeLogoImage () {
 @customElement('runme-button')
 export class RunmeButton extends BaseClass {
   repository = ''
-  file = ''
+  file = DEFAULT_FILE_TO_OPEN
   variant: Variant = 'badge'
 
   render() {
+    if (!this.repository) {
+      return html``
+    }
+
     const filename = this.file.split('/').pop() || 'markdown'
-    const fileToOpen = encodeURIComponent(this.file || 'README.md')
+    const fileToOpen = encodeURIComponent(this.file)
     const href = `https://runme.dev/api/runme?repository=${encodeURIComponent(this.repository)}&fileToOpen=${fileToOpen}`
     const img = this.variant === 'minified' ? runmeLogoImage() : runmeBadgeImage(filename)
     return html`<a href="${href}" class=${this.variant} target="_blank">${img}</a>`

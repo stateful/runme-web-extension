@@ -3,17 +3,16 @@
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
   "version": "0.0.0",
   "manifest_version": 2,
-  "optional_permissions": [
-    "<all_urls>"
-  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://github.com/*"],
       "run_at": "document_idle",
       "js": ["./index.global.js"],
       "css": ["./style.css"]
     }
   ],
+  "permissions": [],
+  "background": {},
   "icons": {
     "72": "icon-72x72.png",
     "96": "icon-96x96.png",
