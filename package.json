@@ -19,7 +19,6 @@
     "bundle": "run-s bundle:*",
     "bundle:firefox": "run-s build && zip -r ./runme-firefox.zip ./dist",
     "bundle:chrome": "run-s build:chrome && crx pack ./dist -o ./runme-chrome.crx",
-    "bundle:zip": "run-s build:chrome && crx pack ./dist --zip-output ./runme-web-extension.zip",
     "package": "zip -r extension.zip dist/*",
     "preview": "vite preview",
     "test": "run-s test:*",
