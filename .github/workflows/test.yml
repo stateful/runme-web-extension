@@ -15,5 +15,14 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Bundle
+        run: npm run bundle
       - name: Test
         run: npm run test
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: extension-files
+          path: |
+            ./*.crx
+            ./*.zip
