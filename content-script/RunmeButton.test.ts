@@ -6,7 +6,7 @@ import { RunmeButton } from './RunmeButton.js'
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
 
 if (isFirefox) {
-  describe('WebdriverIO Component Testing', () => {
+  describe('Runme Button (Firefox)', () => {
     it('should allow to render without Lit', async () => {
       const elem = RunmeButton.render('https://github.com/foo/bar', 'TEST.md', 'badge')
       document.body.appendChild(elem)
@@ -19,7 +19,7 @@ if (isFirefox) {
     })
   })
 } else {
-  describe('WebdriverIO Component Testing (no Firefox)', () => {
+  describe('Runme Button (Chrome)', () => {
     afterEach(() => {
       document.querySelector('runme-button')?.remove()
     })
@@ -56,6 +56,16 @@ if (isFirefox) {
         'https://runme.dev/api/runme?repository=https%3A%2F%2Fgithub.com%2Fstateful%2Frunme&fileToOpen=README.md'
       )
       await expect($('runme-button').shadow$('a')).toHaveText('')
+    })
+
+    it('should render listItem button', async () => {
+      render(
+        html`<runme-button repository="https://github.com/stateful/runme" variant="listItem" />`,
+        document.body
+      )
+      await expect($('runme-button').shadow$('a')).not.toBePresent()
+      await expect($('runme-button').shadow$('div')).toBePresent()
+      await expect($('runme-button').shadow$('div')).toHaveText('Checkout with Runme')
     })
 
     it('should allow to render using static method', async () => {
