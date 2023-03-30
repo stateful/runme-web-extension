@@ -3,8 +3,9 @@ import 'lit/polyfill-support.js'
 
 import { LitElement, css, html, TemplateResult } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
+import { getVSCodeHref } from './utils.js'
 
-type Variant = 'badge' | 'minified'
+type Variant = 'badge' | 'minified' | 'listItem'
 const DEFAULT_FILE_TO_OPEN = 'README.md'
 
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
@@ -44,24 +45,21 @@ function runmeBadgeImage (filename: string) {
     <g aria-hidden="true" fill="#fff" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
       <text x="220" y="148" textLength="494" fill="#000" opacity="0.25">Run this </text>
       <text x="210" y="138" textLength="494">Run this </text>
-      <text x="809" y="148" textLength="469" fill="#000" opacity="0.25">${filename.toUpperCase()}</text>
-      <text x="799" y="138" textLength="469">${filename.toUpperCase()}</text>
+      <text x="809" y="148" textLength="469" fill="#000" opacity="0.25">README</text>
+      <text x="799" y="138" textLength="469">README</text>
     </g>
     <image x="40" y="35" width="130" height="130"
       xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjExIiBmaWxsPSIjNUIzQURGIi8+CjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSJ1cmwoI3BhdHRlcm4wKSIvPgo8ZGVmcz4KPHBhdHRlcm4gaWQ9InBhdHRlcm4wIiBwYXR0ZXJuQ29udGVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgd2lkdGg9IjEiIGhlaWdodD0iMSI+Cjx1c2UgeGxpbms6aHJlZj0iI2ltYWdlMF8zMDhfMTQyIiB0cmFuc2Zvcm09InNjYWxlKDAuMDExMTExMSkiLz4KPC9wYXR0ZXJuPgo8aW1hZ2UgaWQ9ImltYWdlMF8zMDhfMTQyIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBRm9BQUFCYUNBWUFBQUE0cUVFQ0FBQUFCbUpMUjBRQS93RC9BUCtndmFlVEFBQURPMGxFUVZSNG5PM2R5MjhPVVJnRzhPZDFqWVRFUmxpeVptUEZDb242RTJySnpsWWtwU0ZCSWhGbGcwU0VCWkhZNFQrb0x0alIwSTNiampZcTRoYUNSVzhlaStsSjIvaDhuY3M1MzVrejgvelcwNW4zUEpuT04rOWN6Z0FpSWlJaUlpSk5SSElOeVlza1A1RDhUUEl5eVUyeDYyb2Nra1A4MXcrU0owbXVpMTFmWTh6dnlmL3pudVFSa2l0ajE1bThMaUV2OW9wa2YreGFrNVl6YUdlWTVNN1lOU2VwWU5BaytZZmtQWkxiWXRlZWxCSkJPMU1rcjVMY0dIc01TYWdRdFBPVjVDREp0YkhIVW1zZWduYmVrVHhFMG1LUHFaWThCdTA4SWJrbjlyaHFKMERRempESkhiSEhWeHNCZ3liSmFaSTNTVzZPUGM3b0FnZnQvR0xXNm0rSVBkNW9laFMwMDk2V3ZzZEJPMG0yOUpWT3AwalNWeUVsakFBNGJtWmpFV3ZJYlVYc0FpcllEK0FaRTJucFV3NGF5UDRqK3dHOFljMWIrcFFQSFoxOEEzQUp3QlV6bTRwZHpHSk5DOW9aQjNBR3dGMHpxMFdOVFEzYUdRVXdZR2FQWXhmUzlLQ2Rod0NPbWRtTFdBV2svbU9ZVngrQU1XWXQvWllZQmJSbGoxN3NONEJyQU02YjJjOWViYlNOUVR1VEFNNEJ1R1ZtYzZFMzF1YWduZGNBenByWi9aQWJVZEFMUmdDY01MUG5JVmF1b0pjaWdBY0FCczNzcmM4VnQrV3NJNjlnTGIzMjZPNjh0ZlFLT3A4SkFLZFJvYVZYME1XTUlyc0cvcWpvSHlyb2NncTM5QXE2dkJrQTE1R2RFazR2dC9DcThQVTAxbW9BUndITUFoaFlibUh0MGRWOU1iTmxYeWZSZVhTUEtPanE3dVJaU01mbzhtYVFYVzQ5bFdkaEJWMU80ZE03SFRxS0dRV3d6OHdPRkwwdHBxRHptUUJ3R01DdU1sMGhvRVBIY3J4ZFZGTFFuVTBEdUlIc3pzdDNIeXRVMEVzRnUvQ3ZvQmNFZlRwVlA0Ylp6ZG1EWnRZWDhoSGdOdS9SUFgzY29JMUJSM21BcGsxQnp3SzRqZXhNNG1Pdk45NldvUFdRWTJCUEFld3Qwekw3MXRTZ3g1RzF6THZyOEd3MDBMeERSMjFmcldoSzBONWJadDlTRHpwWXkreGJ5a0VuOVVKbkpjRmVRdTR1eVZlVUsrbHh3SHJwUGpBM2pjVDYyT09OSm5EQW1oakZDUmp5TU1udHNjZFhHd0VDMXVSVm5YZ01XTk94ZGVNaFlFMHdtRWVGZ0RWbFpoRWxBcDVqTm1QTTF0aTFKNlZneUpyV3VLeWNBYjlrMjFwbTMwaE9kZ200dlMyemJ5UXZkQWhZSDFQd2pkbm5RWWJtOSt4UDFPZEJSRVJFUkVSRTB2TVhKcEZOUnczSThCd0FBQUFBU1VWT1JLNUNZSUk9Ii8+CjwvZGVmcz4KPC9zdmc+" />
   </svg>`
 }
 
-function runmeLogoImage () {
-  const width = 20
-  const height = 20
-
+function runmeLogoImage (size = 20) {
   if (isFirefox) {
-    return html`<img style="margin: 4px 0 1px" width=${width} height=${height} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAABp1BMVEUAAABJSdtgQN9VOeNgQN9aPOFVOeNYO+JeOeNbN9tePN1cOd5bO99aOt9cOt9bOeBaO+BbOt9bOd9cO+BbOuBcOd5bOd9bO99aOt9bOt9bOt9bOt9aOuBbOt9cOt9bOt9bOt9bOt9aOt9bOuBbOt9bOuBbOt9bOt9bOt9bOt9bOuBbOd9bOt9cO99cPN9ePeBePuBfP+BgP+BgQOBiQuBjQ+FnSeFoSeJpSuJpS+JtUONuUeNvUuNyVuRzV+R1WuR2WuR3W+R8YuZ9Y+Z+ZOZ/ZeaAZuaGbueHb+iJceiJcuiKcuiLc+iSfOqUfuqUf+qWgOqWgeuXg+uYg+uZhOuZheueiuyfi+ygjeygje2pl+6pmO6qme6rmu+sm++tnO+3qPG4qfG5q/G6rPG6rPK7rvK8r/LCtvPDt/PEuPPEufTMwvXNw/XNxPXPxfbPxvbQx/bWzvfa0vja0/jb1Pji3Pnj3vrk3/rm4frn4vro5Pvp5fvq5vvt6fvu6vzv7Pzw7Pzw7fz18/329P339f339v36+f76+v78+/79/f/+/f/+/v////+TJw6gAAAALHRSTlMABwgJEBESGhscHl5fYGFiY3Z4ent9ra6vsMnKy83Oz9fY2dvi4+Tv8PHz9CS5tugAAAABYktHRIxsC9JDAAAB+0lEQVRo3u3aZVNCQRQG4BXFTixUVLAIF1Ts7hYVu7vFxsDGRs+PdkUZ/eaM+vLB2fcH8MzsPXfv2cMy5k1wTIoun/9p8nXqaCX7TGCCkUNiiA/0GSFpHJbM8HcjLI8DkxvqXat0Do1GIZBEDo5K1JURjRiULJbDE8VS8Egyy8YjOmbCIybG/RCJSEQiEpHIDxGzGY/YXWdTVWYsYnYRefaGLViEvHH2leARullrxiNi0VbaLHCEns8nK+GIyPVoDR6hh4OeIjgiFs3ZUQpHiNwbdXhE1PNSQwEcITqcLsYjRK7xCjxCj9vdeETE0VWIR8g9X4tHiO5nG/EIPR0PlsKRt0KzleMRut1tscARUc+OZiscITpfLMcjRJcDfkDo9L8gF3b8g18og5fwZhO6hG934C/jy4mtDL1BHg2UoDfIuxn4Vn89B/9ovTg60Z/fx60ueCNxMgZviQ6nrPA2dbEe3aa61+ENt8fZjj46POx3F3KORa5GquEH04kKzrGIZ7kVfcS+WW2CDwsOeqFjD+8AZ+i3Y6JvRlH9rtNJ9ChKziAlIhGJSOQ/IH74q9zIsvCIlqnxSBKLxiMRLNiANvRBjMWjkThxA0ehwRqpb9d8WGgu0sgJ+bh6lYozMsJ9F7wUKtDT18cFfLmrpoxSa//43TdpkyOD3n/9FQ2gWMh05jU2AAAAAElFTkSuQmCC" />`
+    return html`<img style="margin: 4px 0 1px" width=${size} height=${size} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAABp1BMVEUAAABJSdtgQN9VOeNgQN9aPOFVOeNYO+JeOeNbN9tePN1cOd5bO99aOt9cOt9bOeBaO+BbOt9bOd9cO+BbOuBcOd5bOd9bO99aOt9bOt9bOt9bOt9aOuBbOt9cOt9bOt9bOt9bOt9aOt9bOuBbOt9bOuBbOt9bOt9bOt9bOt9bOuBbOd9bOt9cO99cPN9ePeBePuBfP+BgP+BgQOBiQuBjQ+FnSeFoSeJpSuJpS+JtUONuUeNvUuNyVuRzV+R1WuR2WuR3W+R8YuZ9Y+Z+ZOZ/ZeaAZuaGbueHb+iJceiJcuiKcuiLc+iSfOqUfuqUf+qWgOqWgeuXg+uYg+uZhOuZheueiuyfi+ygjeygje2pl+6pmO6qme6rmu+sm++tnO+3qPG4qfG5q/G6rPG6rPK7rvK8r/LCtvPDt/PEuPPEufTMwvXNw/XNxPXPxfbPxvbQx/bWzvfa0vja0/jb1Pji3Pnj3vrk3/rm4frn4vro5Pvp5fvq5vvt6fvu6vzv7Pzw7Pzw7fz18/329P339f339v36+f76+v78+/79/f/+/f/+/v////+TJw6gAAAALHRSTlMABwgJEBESGhscHl5fYGFiY3Z4ent9ra6vsMnKy83Oz9fY2dvi4+Tv8PHz9CS5tugAAAABYktHRIxsC9JDAAAB+0lEQVRo3u3aZVNCQRQG4BXFTixUVLAIF1Ts7hYVu7vFxsDGRs+PdkUZ/eaM+vLB2fcH8MzsPXfv2cMy5k1wTIoun/9p8nXqaCX7TGCCkUNiiA/0GSFpHJbM8HcjLI8DkxvqXat0Do1GIZBEDo5K1JURjRiULJbDE8VS8Egyy8YjOmbCIybG/RCJSEQiEpHIDxGzGY/YXWdTVWYsYnYRefaGLViEvHH2leARullrxiNi0VbaLHCEns8nK+GIyPVoDR6hh4OeIjgiFs3ZUQpHiNwbdXhE1PNSQwEcITqcLsYjRK7xCjxCj9vdeETE0VWIR8g9X4tHiO5nG/EIPR0PlsKRt0KzleMRut1tscARUc+OZiscITpfLMcjRJcDfkDo9L8gF3b8g18og5fwZhO6hG934C/jy4mtDL1BHg2UoDfIuxn4Vn89B/9ovTg60Z/fx60ueCNxMgZviQ6nrPA2dbEe3aa61+ENt8fZjj46POx3F3KORa5GquEH04kKzrGIZ7kVfcS+WW2CDwsOeqFjD+8AZ+i3Y6JvRlH9rtNJ9ChKziAlIhGJSOQ/IH74q9zIsvCIlqnxSBKLxiMRLNiANvRBjMWjkThxA0ehwRqpb9d8WGgu0sgJ+bh6lYozMsJ9F7wUKtDT18cFfLmrpoxSa//43TdpkyOD3n/9FQ2gWMh05jU2AAAAAElFTkSuQmCC" />`
   }
 
   return html`
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width=${width} height=${height} viewBox="0 0 100 100" fill="none">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width=${size} height=${size} viewBox="0 0 100 100" fill="none">
     <rect width="100" height="100" rx="11" fill="#5B3ADF" />
     <rect x="20" y="20" width="60" height="60" fill="url(#pattern0)" />
     <defs>
@@ -86,9 +84,22 @@ export class RunmeButton extends BaseClass {
 
     const filename = this.file.split('/').pop() || 'markdown'
     const fileToOpen = encodeURIComponent(this.file)
-    const href = `https://runme.dev/api/runme?repository=${encodeURIComponent(this.repository)}&fileToOpen=${fileToOpen}`
     const img = this.variant === 'minified' ? runmeLogoImage() : runmeBadgeImage(filename)
-    return html`<a href="${href}" class=${this.variant} target="_blank">${img}</a>`
+
+    if (this.variant === 'listItem') {
+      return html`<div class="listItem">
+        ${runmeLogoImage(16)}
+        Checkout with Runme
+      </div>`
+    }
+
+    return html`<a
+      href="${getVSCodeHref(this.repository, fileToOpen)}"
+      class=${this.variant}
+      target="_blank"
+    >
+      ${img}
+    </a>`
   }
 
   static styles = css`
@@ -109,6 +120,15 @@ export class RunmeButton extends BaseClass {
       background-color: var(--color-btn-hover-bg);
       border-color: var(--color-btn-hover-border);
       transition-duration: .1s;
+    }
+    div.listItem {
+      color: #000;
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+    div.listItem svg {
+      transform: translateY(3px);
+      margin-right: 4px;
     }
     svg {
       margin: 4px 0 0;

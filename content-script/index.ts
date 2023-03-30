@@ -22,7 +22,7 @@ function init(root: HTMLElement = document.body) {
       continue
     }
 
-    const targetElems = factory(root, selector).filter(hasNoRunmeButton)
+    const targetElems = factory(root, selector, { repository, fileToOpen }).filter(hasNoRunmeButton)
     const variant = BUTTON_VARIANTS[selector] || 'badge'
     for (const el of targetElems) {
       el.appendChild(RunmeButton.render(repository, fileToOpen, variant))

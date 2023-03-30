@@ -1,4 +1,9 @@
-export function getLinkDetails (pathname = document.location.pathname) {
+export interface LinkDetails {
+  fileToOpen: string
+  repository: string
+}
+
+export function getLinkDetails (pathname = document.location.pathname): LinkDetails {
     let fileToOpen = 'README.md'
     const [orgId, projectName, tree, sha, ...pathToFile] = pathname.slice(1).split('/')
 
@@ -10,4 +15,8 @@ export function getLinkDetails (pathname = document.location.pathname) {
         repository: `https://github.com/${orgId}/${projectName}.git`,
         fileToOpen
     }
+}
+
+export function getVSCodeHref (repository: string, fileToOpen: string) {
+  return `https://runme.dev/api/runme?repository=${encodeURIComponent(repository)}&fileToOpen=${fileToOpen}`
 }
