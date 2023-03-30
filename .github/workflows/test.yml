@@ -6,7 +6,7 @@ on: # rebuild any PRs and main branch changes
       - main
 
 jobs:
-  install:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
