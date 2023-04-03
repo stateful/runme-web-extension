@@ -23,7 +23,11 @@
     "preview": "vite preview",
     "test": "run-s test:*",
     "test:component": "wdio run ./wdio.ui.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
-    "test:e2e": "wdio run ./wdio.e2e.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json"
+    "test:e2e": "wdio run ./wdio.e2e.conf.ts --autoCompileOpts.tsNodeOpts.project ./tsconfig.node.json",
+    "version": "run-s version:*",
+    "version:update": "npx replace '\"version\": \"(\\d+).(\\d+).(\\d+)\"' \"\\\"version\\\": \\\"$npm_package_version\\\"\" ./public/*.json",
+    "version:bundle": "run-s bundle",
+    "version:git": "git add public"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
@@ -40,6 +44,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "release-it": "^15.9.3",
+    "replace": "^1.2.2",
     "rimraf": "^4.4.1",
     "tailwindcss": "^3.2.7",
     "ts-node": "^10.9.1",
