@@ -61,13 +61,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'yes' }}
       - name: Prepare Release
-        run: echo "RUNME_VERSION=$(cat package.json | jq .version)" >> $GITHUB_ENV
+        run: echo "RUNME_VERSION=$(cat package.json | jq .version | cut -d "\"" -f 2)" >> $GITHUB_ENV
       - name: GitHub Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "./*.crx,./*.zip"
           bodyFile: ${{ github.workspace }}-CHANGELOG.txt
-          tag: ${{ env.RUNME_VERSION }}
+          tag: v${{ env.RUNME_VERSION }}
           prerelease: ${{ github.event.inputs.preRelease == 'yes' }}
       - uses: actions/upload-artifact@v3
         with:
