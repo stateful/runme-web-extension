@@ -175,9 +175,9 @@ export class RunmeButton extends BaseClass {
           .split('}')
           .map((rule) => rule.trim())
           .filter(Boolean)
-          .map((rule) => '.runme-button ' + rule + ' }')
+          .map((rule) => rule.includes('@media') ? rule : `.runme-button ${rule} }`)
           .forEach(
-            (rule) => document.styleSheets.item(0)!.insertRule(rule, 1)
+            (rule) => document.styleSheets.item(0)?.insertRule(rule, 1)
           )
       }
 

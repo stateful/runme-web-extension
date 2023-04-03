@@ -1,4 +1,5 @@
 import { RunmeButton } from './RunmeButton.js'
+import manifest from '../public/manifest.json' assert { type: 'json' };
 import './index.css'
 
 import { getLinkDetails } from './utils.js'
@@ -11,6 +12,7 @@ function hasNoRunmeButton (el: Element) {
 }
 
 function init(root: HTMLElement = document.body) {
+  console.debug(`Initiate Runme extension v${manifest.version}`);
   const { repository, fileToOpen } = getLinkDetails()
   if (!repository) {
     return
