@@ -48,7 +48,6 @@ jobs:
           NODE_ENV: production
       - name: Prepare Release
         run: |
-          echo "RUNME_VERSION=$(cat package.json | jq .version | cut -d "\"" -f 2)" >> $GITHUB_ENV
           git log $(git describe --tags --abbrev=0)..HEAD --oneline &> ${{ github.workspace }}-CHANGELOG.txt
           cat ${{ github.workspace }}-CHANGELOG.txt
           rm ./*.zip ./*.crx
@@ -58,12 +57,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'no' }}
-      - name: Pre-Release
-        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --no-github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --preRelease=alpha --github.preRelease
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ github.event.inputs.preRelease == 'yes' }}
+      - name: Set Release Version Environment Variable
+        run: echo "RUNME_VERSION=$(cat package.json | jq .version | cut -d "\"" -f 2)" >> $GITHUB_ENV
       - name: GitHub Release
         uses: ncipollo/release-action@v1
         with:
