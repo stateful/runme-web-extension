@@ -1,13 +1,14 @@
 import fs from 'node:fs/promises'
 import type { Options } from '@wdio/types'
 
+import pkg from './package.json' assert { type: 'json' }
 import { config as baseConfig } from './wdio.conf.js'
 
 import path from 'node:path'
 import url from 'node:url'
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
-const chromeExtension = (await fs.readFile(path.join(__dirname, 'runme-chrome.crx'))).toString('base64')
+const chromeExtension = (await fs.readFile(path.join(__dirname, `runme-chrome-v${pkg.version}.crx`))).toString('base64')
 const firefoxExtension = path.join(__dirname, 'dist')
 
 export const config: Options.Testrunner = {

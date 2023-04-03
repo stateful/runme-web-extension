@@ -1,5 +1,5 @@
 import { RunmeButton } from './RunmeButton.js'
-import manifest from '../public/manifest.json' assert { type: 'json' };
+import manifest from '../public/manifest.json' assert { type: 'json' }
 import './index.css'
 
 import { getLinkDetails } from './utils.js'
