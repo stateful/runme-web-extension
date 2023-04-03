@@ -42,18 +42,29 @@ jobs:
         run: npm run bundle
         env:
           NODE_ENV: production
+      - name: Create Changelog
+        run: |
+          git log $(git describe --tags --abbrev=0)..HEAD --oneline &> ${{ github.workspace }}-CHANGELOG.txt
+          cat ${{ github.workspace }}-CHANGELOG.txt
       - name: Release
-        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir
+        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --no-github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'no' }}
       - name: Pre-Release
-        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --preRelease=alpha --github.preRelease
+        run: npx release-it ${{github.event.inputs.releaseType}} --no-npm --no-github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --preRelease=alpha --github.preRelease
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'yes' }}
+      - name: GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./*.crx,./*.zip"
+          bodyFile: ${{ github.workspace }}-CHANGELOG.txt
+          tag: ${{ env.GIT_TAG }}
+          prerelease: ${{ github.event.inputs.preRelease == 'yes' }}
       - uses: actions/upload-artifact@v3
         with:
           name: extension-files
