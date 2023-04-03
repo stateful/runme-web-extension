@@ -30,6 +30,10 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+      - name: Setup Git
+        run: |
+          git config --global user.name "stateful-wombot"
+          git config --global user.email "christian+github-bot@stateful.com"
       - name: Install
         run: npm ci
       - name: Build
