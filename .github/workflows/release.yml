@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup Git
         run: |
           git config --global user.name "stateful-wombot"
@@ -58,12 +60,14 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'yes' }}
+      - name: Prepare Release
+        run: echo "RUNME_VERSION=$(cat package.json | jq .version)" >> $GITHUB_ENV
       - name: GitHub Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "./*.crx,./*.zip"
           bodyFile: ${{ github.workspace }}-CHANGELOG.txt
-          tag: ${{ env.GIT_TAG }}
+          tag: ${{ env.RUNME_VERSION }}
           prerelease: ${{ github.event.inputs.preRelease == 'yes' }}
       - uses: actions/upload-artifact@v3
         with:
