@@ -1,7 +1,7 @@
 {
   "name": "Runme Web Extension",
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
   "content_scripts": [
     {
