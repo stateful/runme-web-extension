@@ -1,6 +1,6 @@
 {
   "name": "runme-web-extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
   "author": "Christian Bromann <christian@stateful.com>",
   "license": "Apache-2.0",
