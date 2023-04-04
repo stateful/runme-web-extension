@@ -55,7 +55,7 @@ function runmeBadgeImage (filename: string) {
 
 function runmeLogoImage (size = 20) {
   if (isFirefox) {
-    return html`<img style="margin: 4px 0 1px" width=${size} height=${size} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAABp1BMVEUAAABJSdtgQN9VOeNgQN9aPOFVOeNYO+JeOeNbN9tePN1cOd5bO99aOt9cOt9bOeBaO+BbOt9bOd9cO+BbOuBcOd5bOd9bO99aOt9bOt9bOt9bOt9aOuBbOt9cOt9bOt9bOt9bOt9aOt9bOuBbOt9bOuBbOt9bOt9bOt9bOt9bOuBbOd9bOt9cO99cPN9ePeBePuBfP+BgP+BgQOBiQuBjQ+FnSeFoSeJpSuJpS+JtUONuUeNvUuNyVuRzV+R1WuR2WuR3W+R8YuZ9Y+Z+ZOZ/ZeaAZuaGbueHb+iJceiJcuiKcuiLc+iSfOqUfuqUf+qWgOqWgeuXg+uYg+uZhOuZheueiuyfi+ygjeygje2pl+6pmO6qme6rmu+sm++tnO+3qPG4qfG5q/G6rPG6rPK7rvK8r/LCtvPDt/PEuPPEufTMwvXNw/XNxPXPxfbPxvbQx/bWzvfa0vja0/jb1Pji3Pnj3vrk3/rm4frn4vro5Pvp5fvq5vvt6fvu6vzv7Pzw7Pzw7fz18/329P339f339v36+f76+v78+/79/f/+/f/+/v////+TJw6gAAAALHRSTlMABwgJEBESGhscHl5fYGFiY3Z4ent9ra6vsMnKy83Oz9fY2dvi4+Tv8PHz9CS5tugAAAABYktHRIxsC9JDAAAB+0lEQVRo3u3aZVNCQRQG4BXFTixUVLAIF1Ts7hYVu7vFxsDGRs+PdkUZ/eaM+vLB2fcH8MzsPXfv2cMy5k1wTIoun/9p8nXqaCX7TGCCkUNiiA/0GSFpHJbM8HcjLI8DkxvqXat0Do1GIZBEDo5K1JURjRiULJbDE8VS8Egyy8YjOmbCIybG/RCJSEQiEpHIDxGzGY/YXWdTVWYsYnYRefaGLViEvHH2leARullrxiNi0VbaLHCEns8nK+GIyPVoDR6hh4OeIjgiFs3ZUQpHiNwbdXhE1PNSQwEcITqcLsYjRK7xCjxCj9vdeETE0VWIR8g9X4tHiO5nG/EIPR0PlsKRt0KzleMRut1tscARUc+OZiscITpfLMcjRJcDfkDo9L8gF3b8g18og5fwZhO6hG934C/jy4mtDL1BHg2UoDfIuxn4Vn89B/9ovTg60Z/fx60ueCNxMgZviQ6nrPA2dbEe3aa61+ENt8fZjj46POx3F3KORa5GquEH04kKzrGIZ7kVfcS+WW2CDwsOeqFjD+8AZ+i3Y6JvRlH9rtNJ9ChKziAlIhGJSOQ/IH74q9zIsvCIlqnxSBKLxiMRLNiANvRBjMWjkThxA0ehwRqpb9d8WGgu0sgJ+bh6lYozMsJ9F7wUKtDT18cFfLmrpoxSa//43TdpkyOD3n/9FQ2gWMh05jU2AAAAAElFTkSuQmCC" />`
+    return html`<img width=${size} height=${size} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAABp1BMVEUAAABJSdtgQN9VOeNgQN9aPOFVOeNYO+JeOeNbN9tePN1cOd5bO99aOt9cOt9bOeBaO+BbOt9bOd9cO+BbOuBcOd5bOd9bO99aOt9bOt9bOt9bOt9aOuBbOt9cOt9bOt9bOt9bOt9aOt9bOuBbOt9bOuBbOt9bOt9bOt9bOt9bOuBbOd9bOt9cO99cPN9ePeBePuBfP+BgP+BgQOBiQuBjQ+FnSeFoSeJpSuJpS+JtUONuUeNvUuNyVuRzV+R1WuR2WuR3W+R8YuZ9Y+Z+ZOZ/ZeaAZuaGbueHb+iJceiJcuiKcuiLc+iSfOqUfuqUf+qWgOqWgeuXg+uYg+uZhOuZheueiuyfi+ygjeygje2pl+6pmO6qme6rmu+sm++tnO+3qPG4qfG5q/G6rPG6rPK7rvK8r/LCtvPDt/PEuPPEufTMwvXNw/XNxPXPxfbPxvbQx/bWzvfa0vja0/jb1Pji3Pnj3vrk3/rm4frn4vro5Pvp5fvq5vvt6fvu6vzv7Pzw7Pzw7fz18/329P339f339v36+f76+v78+/79/f/+/f/+/v////+TJw6gAAAALHRSTlMABwgJEBESGhscHl5fYGFiY3Z4ent9ra6vsMnKy83Oz9fY2dvi4+Tv8PHz9CS5tugAAAABYktHRIxsC9JDAAAB+0lEQVRo3u3aZVNCQRQG4BXFTixUVLAIF1Ts7hYVu7vFxsDGRs+PdkUZ/eaM+vLB2fcH8MzsPXfv2cMy5k1wTIoun/9p8nXqaCX7TGCCkUNiiA/0GSFpHJbM8HcjLI8DkxvqXat0Do1GIZBEDo5K1JURjRiULJbDE8VS8Egyy8YjOmbCIybG/RCJSEQiEpHIDxGzGY/YXWdTVWYsYnYRefaGLViEvHH2leARullrxiNi0VbaLHCEns8nK+GIyPVoDR6hh4OeIjgiFs3ZUQpHiNwbdXhE1PNSQwEcITqcLsYjRK7xCjxCj9vdeETE0VWIR8g9X4tHiO5nG/EIPR0PlsKRt0KzleMRut1tscARUc+OZiscITpfLMcjRJcDfkDo9L8gF3b8g18og5fwZhO6hG934C/jy4mtDL1BHg2UoDfIuxn4Vn89B/9ovTg60Z/fx60ueCNxMgZviQ6nrPA2dbEe3aa61+ENt8fZjj46POx3F3KORa5GquEH04kKzrGIZ7kVfcS+WW2CDwsOeqFjD+8AZ+i3Y6JvRlH9rtNJ9ChKziAlIhGJSOQ/IH74q9zIsvCIlqnxSBKLxiMRLNiANvRBjMWjkThxA0ehwRqpb9d8WGgu0sgJ+bh6lYozMsJ9F7wUKtDT18cFfLmrpoxSa//43TdpkyOD3n/9FQ2gWMh05jU2AAAAAElFTkSuQmCC" />`
   }
 
   return html`
@@ -87,7 +87,8 @@ export class RunmeButton extends BaseClass {
     const img = this.variant === 'minified' ? runmeLogoImage() : runmeBadgeImage(filename)
 
     if (this.variant === 'listItem') {
-      return html`<div class="listItem">
+      const colorMode = document.body.parentElement!.getAttribute('data-color-mode') || 'auto'
+      return html`<div class="listItem ${colorMode}">
         ${runmeLogoImage(16)}
         Checkout with Runme
       </div>`
@@ -125,17 +126,23 @@ export class RunmeButton extends BaseClass {
       text-decoration: none;
       transform: translateY(-2px);
     }
+    div.listItem.light {
+      color: #000000;
+    }
+    div.listItem.dark {
+      color: #c9d1d9;
+    }
     @media (prefers-color-scheme: light) {
-      div.listItem {
+      div.listItem.auto {
         color: #000000;
       }
     }
     @media (prefers-color-scheme: dark) {
-      div.listItem {
+      div.listItem.auto {
         color: #c9d1d9;
       }
     }
-    div.listItem svg {
+    div.listItem svg, div.listItem img {
       transform: translateY(3px);
       margin-right: 4px;
     }

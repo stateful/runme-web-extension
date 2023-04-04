@@ -31,7 +31,8 @@ export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string,
       container.className = 'btnRunme'
       container.style.position = 'absolute'
       container.style.top = '7px'
-      container.style.right = '45px'
+      container.style.right = '0px'
+      container.style.transform = 'translateX(-45px)'
       containers.push(container)
       el.appendChild(container)
     }
@@ -49,8 +50,11 @@ export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string,
     }
 
     li.appendChild(a)
-    list!.appendChild(li)
-    return [a]
+    if (list) {
+      list.appendChild(li)
+      return [a]
+    }
+    return []
   }
 }
 
