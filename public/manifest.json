@@ -1,8 +1,10 @@
 {
+  "manifest_version": 3,
   "name": "Runme Web Extension",
+  "author": "christian@stateful.com",
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
+  "homepage_url": "https://runme.dev",
   "version": "0.0.6",
-  "manifest_version": 2,
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
@@ -18,5 +20,11 @@
     "128": "icon-128x128.png",
     "144": "icon-144x144.png",
     "152": "icon-152x152.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{7f52a323-53cf-43bf-a24b-3b5630e424c6}",
+      "strict_min_version": "100.0"
+    }
   }
 }

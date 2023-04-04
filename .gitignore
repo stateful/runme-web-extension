@@ -4,3 +4,4 @@ dist
 *.crx
 *.pem
 *.zip
+*.xpi

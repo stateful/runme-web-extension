@@ -5,6 +5,8 @@ import './index.css'
 import { getLinkDetails } from './utils.js'
 import { BUTTON_VARIANTS, ATTACH_POINTS } from './constants.js'
 
+console.log('\n\n\nAHHHHHH\n\n\n');
+
 console.debug('Runme Web Extension initiated, more information at https://github.com/stateful/runme-web-extension')
 
 function hasNoRunmeButton (el: Element) {
