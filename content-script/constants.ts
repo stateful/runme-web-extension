@@ -2,13 +2,21 @@ import { getLinkDetails, type LinkDetails } from "./utils"
 import { getVSCodeHref } from './utils.js'
 
 export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string, linkDetails?: LinkDetails) => Element[]> = {
-  '#readme > div': (root: Element, selector: string) => {
+  /**
+   * Inject the button in the header of the markdown file when looking at
+   * the repository main view, e.g. https://github.com/refined-github/refined-github
+   */
+  '#readme > div:first-child': (root: Element, selector: string) => {
     const editBtn = document.querySelector('a[aria-label="Edit this file"]')
     if (editBtn) {
       return [editBtn.parentElement!]
     }
     return [...root.querySelectorAll(selector)]
   },
+  /**
+   * Inject button next to "Display Source Blob" and "Display the rendered blob"
+   * button in the file detail view, e.g. https://github.com/refined-github/refined-github/blob/main/contributing.md
+   */
   'readme-toc > div > div': (root: Element, selector: string) => {
     const containers: Element[] = []
     for (const el of [...root.querySelectorAll(selector)]) {
@@ -24,6 +32,9 @@ export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string,
 
     return containers
   },
+  /**
+   * Inject a minified button in any code example
+   */
   '.zeroclipboard-container': (root: Element, selector: string) => {
     const containers: Element[] = []
     for (const el of [...root.querySelectorAll(selector)]) {
@@ -39,6 +50,9 @@ export const ATTACH_POINTS: Record<string, (root: HTMLElement, selector: string,
 
     return containers
   },
+  /**
+   * Inject a check out button in the Code drop down
+   */
   '#local-panel ul': (root: Element, selector: string, linkDetails) => {
     const list = root.querySelector(selector)
     const li = document.createElement('li')

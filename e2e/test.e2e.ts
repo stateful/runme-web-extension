@@ -24,6 +24,6 @@ describe('Runme Web Extension e2e test', () => {
     const selector = isFirefox
       ? '.runme-button'
       : 'runme-button'
-    await expect($$(selector)).toBeElementsArrayOfSize(5)
+    await expect($$(selector)).toBeElementsArrayOfSize(4)
   })
 })
