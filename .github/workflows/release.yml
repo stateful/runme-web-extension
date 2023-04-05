@@ -38,12 +38,10 @@ jobs:
           git config --global user.email "christian+github-bot@stateful.com"
       - name: Install
         run: npm ci
-      - name: Build
-        run: npm run build
+      - name: Bundle
+        run: npm run bundle
       - name: Test
-        run: |
-          npm run bundle
-          npm test
+        run: npm test
         env:
           NODE_ENV: production
       - name: Prepare Release
