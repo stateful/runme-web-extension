@@ -22,5 +22,8 @@ export const config: Options.Testrunner = {
     }
   }, {
     browserName: 'firefox',
+    'moz:firefoxOptions': {
+      args: ['-headless']
+    }
   }]
 }
