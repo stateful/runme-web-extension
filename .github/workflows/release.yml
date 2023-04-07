@@ -28,10 +28,6 @@ jobs:
   release:
     strategy:
       fail-fast: false
-      matrix:
-        command:
-        - firefox
-        - chrome
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -45,7 +41,7 @@ jobs:
       - name: Install
         run: npm ci
       - name: Bundle
-        run: npm run bundle:${{ matrix.command }}
+        run: npm run bundle
       - name: Test
         run: npm test
         env:
@@ -77,14 +73,12 @@ jobs:
             ./*.crx
             ./*.zip
       - name: Submit to Mozilla
-        if: matrix.command == 'firefox'
         working-directory: ./dist
         run: npx web-ext-submit@7
         env:
           WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
           WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
       - name: Submit to Google
-        if: matrix.command == 'chrome'
         working-directory: ./dist
         run: npx chrome-webstore-upload-cli@2 upload --auto-publish
         env:
