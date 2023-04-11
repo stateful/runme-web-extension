@@ -4,7 +4,7 @@
   "author": "christian@stateful.com",
   "description": "A Runme browser extension to bring Runme capabilities into the browser.",
   "homepage_url": "https://runme.dev",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
