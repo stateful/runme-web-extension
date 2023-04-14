@@ -10,16 +10,26 @@ A browser web extension to add Runme buttons to markdown files on the internet. 
 
 Install dependencies via:
 
-```sh
+```sh { name=setup }
 npm i
 ```
 
 then build files via:
 
-```sh
-npm run build
-# building for Chrome
-npm run build:chrome
+```sh { name=bundleAll }
+npm run bundle
+```
+
+building for Chrome:
+
+```sh { name=bundleChrome }
+npm run bundle:chrome
+```
+
+building for Firefox:
+
+```sh { name=bundleFirefox }
+npm run bundle:firefox
 ```
 
 ### Test
@@ -28,13 +38,13 @@ This project tests the extension files using component tests and the extension i
 
 Run unit/component tests:
 
-```sh
+```sh { name=testUI }
 npm run test:component
 ```
 
 Run e2e tests:
 
-```sh
+```sh { name=testE2E }
 npm run test:e2e
 ```
 
