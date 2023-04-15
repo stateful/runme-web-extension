@@ -2,10 +2,11 @@
 
 A browser web extension to add Runme buttons to markdown files on the internet. Download the extension on the marketplaces:
 
-- Chrome:
-- Firefox:
+- [Chrome](https://chrome.google.com/webstore/detail/runme-web-extension/lnihnbkolojkaehnkdmpliededkfebkk)
+- [Firefox](https://addons.mozilla.org/en-GB/firefox/addon/runme/)
 
 ## Development
+
 ### Setup
 
 Install dependencies via:
@@ -66,8 +67,8 @@ To load the extensions in Google Chrome go to `chrome://extensions/` and click `
 
 ## Files:
 
- - content-script - UI files
- - background.ts - Background script/Service worker
- - index.html - popup UI
+- content-script - UI files
+- background.ts - Background script/Service worker
+- index.html - popup UI
 
 If you have any questions feel free to open an issue.
