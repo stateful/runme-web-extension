@@ -59,7 +59,7 @@
     "vite": "^4.2.1",
     "wdio-chromedriver-service": "^8.1.1",
     "wdio-geckodriver-service": "^4.1.1",
-    "web-ext": "^7.6.0",
+    "web-ext": "^7.6.2",
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
